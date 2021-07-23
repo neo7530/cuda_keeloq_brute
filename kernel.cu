@@ -235,12 +235,12 @@ int main(int argc, char** argv) {
 
     while (1 == 1) {
         
-        Kernel << <2, (arraySize + 1) / 2, 0, stream0 >> > (dev_ctext, dev_key0, dev_p01, dev_p02, arraySize, dev_keyfin, dev_p1fin, dev_p2fin, dev_p3fin);
-        Kernel << <2, (arraySize + 1) / 2, 0, stream1 >> > (dev_ctext, dev_key1, dev_p11, dev_p12, arraySize, dev_keyfin, dev_p1fin, dev_p2fin, dev_p3fin);
-        Kernel << <2, (arraySize + 1) / 2, 0, stream2 >> > (dev_ctext, dev_key2, dev_p21, dev_p22, arraySize, dev_keyfin, dev_p1fin, dev_p2fin, dev_p3fin);
-        Kernel << <2, (arraySize + 1) / 2, 0, stream3 >> > (dev_ctext, dev_key3, dev_p31, dev_p32, arraySize, dev_keyfin, dev_p1fin, dev_p2fin, dev_p3fin);
+        Kernel << <4, (arraySize + 1) / 4, 0, stream0 >> > (dev_ctext, dev_key0, dev_p01, dev_p02, arraySize, dev_keyfin, dev_p1fin, dev_p2fin, dev_p3fin);
+        Kernel << <4, (arraySize + 1) / 4, 0, stream1 >> > (dev_ctext, dev_key1, dev_p11, dev_p12, arraySize, dev_keyfin, dev_p1fin, dev_p2fin, dev_p3fin);
+        Kernel << <4, (arraySize + 1) / 4, 0, stream2 >> > (dev_ctext, dev_key2, dev_p21, dev_p22, arraySize, dev_keyfin, dev_p1fin, dev_p2fin, dev_p3fin);
+        Kernel << <4, (arraySize + 1) / 4, 0, stream3 >> > (dev_ctext, dev_key3, dev_p31, dev_p32, arraySize, dev_keyfin, dev_p1fin, dev_p2fin, dev_p3fin);
         rekey << <1, 1, 0, stream4 >> > (dev_skey0, dev_skey1, dev_skey2, dev_skey3, arraySize);
-        cudaDeviceSynchronize();
+        //cudaDeviceSynchronize();
 
         cudaMemcpy(dev_key0, dev_skey0, arraySize * sizeof(uint64_t), cudaMemcpyDeviceToDevice);
         cudaMemcpy(dev_key1, dev_skey1, arraySize * sizeof(uint64_t), cudaMemcpyDeviceToDevice);
